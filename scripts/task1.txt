@@ -1,0 +1,33 @@
+step1:
+create or replace database sf_task1;
+
+step2:
+create or replace warehouse sf_task1_wh with warehouse_size='X-SMALL'auto_suspend = 180 auto_resume = true initially_suspended=true;
+
+step3:
+use database sf_task1;
+
+step4:
+use warehouse sf_task1_wh;
+
+step5:
+create or replace table task1 (first_name string ,last_name string ,email string ,streetaddress string ,city string ,start_date date);
+
+step6:
+create or replace file format my_csv_format type = csv field_delimiter = ','skip_header = 1 null_if = ('NULL', 'null', 'Unknown', 'unknown', 'UNKNOWN')empty_field_as_null = true compression = gzip;
+
+step7:
+copy into task1 from s3://candy00/employees01.csv credentials=(aws_key_id='AKIA6ERB5MRO4XF3MQX2' aws_secret_key='MAiMSvg+KcpdVEoK4brcCrMTQe4Wd1Vyw+/a3K8L')
+file_format = (type = csv field_optionally_enclosed_by='"')
+on_error = 'skip_file';
+
+step8:
+create or replace function get_email_for_user(fname varchar)
+returns table (email varchar, city varchar) as $$
+select email, city from task1
+where first_name = fname
+$$
+;
+
+step9:
+select * from table(get_email_for_user('Avo'));

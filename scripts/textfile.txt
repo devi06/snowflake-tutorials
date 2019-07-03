@@ -1,0 +1,33 @@
+create or replace table example (
+  id string ,
+  age string ,
+  job string ,
+  marital string ,
+  education string ,
+  default string,
+  housing string,
+  loan string,
+  contact string,
+  month string,
+  day_of_week string,
+  duration string,
+  compaign string,
+  pdays string,
+  previous string
+  );
+
+  put file :///users/laksh/snowflake_tutorials/dataset 
+
+  
+  
+  
+/Users/laksh/Desktop/collabera training/GIT/datascience-tutorials/datasets
+
+
+put 'file:///Users/laksh/Desktop/collabera training/GIT/datascience-tutorials/datasets/Exercise_part_1.csv' @sf_tuts.public.%example;
+insert into example values('V01','28','IT','married','MCA','','$300','$400','5678789','july','tuesday','5','12','8','6');
+copy into example
+  from @%example
+  file_format = (type = csv field_optionally_enclosed_by='"')
+  pattern = '.*Exercise_Part_1.csv.gz'
+  on_error = 'skip_file';
