@@ -43,7 +43,7 @@ print(list1)
 
 # Ex 7 - Add parts of list1 & 2 by tking first 4 elements from list1 and last 2 elements from list2
 first4_list1 = list1[0:4]
-last2_list2 = list2[len(list2)-2:len(list2)]
+list2_list2 = list2[len(list2)-2:len(list2)]
 print(first4_list1 + last2_list2)
 
 # ex 8 check if 99 is in list 1
@@ -65,6 +65,7 @@ list1*2
 # ex 12 - find min & max of list2
 # min(list2)  error not supported between instances of 'str' and 'int'
 # max(list2)  error not supported between instances of 'str' and 'int'
+list2.pop(3)
 min(list2)
 max(list2)
 
